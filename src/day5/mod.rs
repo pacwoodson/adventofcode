@@ -26,22 +26,14 @@ pub fn solve(input: &String) -> (String, String) {
         }
     }
 
-    let mut fresh_ranges_filtered: Vec<Vec<u64>> = fresh_ranges.clone();
-    fresh_ranges_filtered.sort_by(|a, b| a[0].cmp(&b[0]));
+    let fresh_ranges_dedup = dedup_ranges(&fresh_ranges);
 
-    println!("fresh ranges not filtered:");
-    for fresh_range in fresh_ranges_filtered.iter() {
-        println!("{}-{}", fresh_range[0], fresh_range[1]);
-    }
+    // println!("fresh ranges filtered:");
+    // for fresh_range in fresh_ranges_filtered.iter() {
+    //     println!("{}-{}", fresh_range[0], fresh_range[1]);
+    // }
 
-    fresh_ranges_filtered = filter_fresh_ranges(&fresh_ranges_filtered);
-
-    println!("fresh ranges filtered:");
-    for fresh_range in fresh_ranges_filtered.iter() {
-        println!("{}-{}", fresh_range[0], fresh_range[1]);
-    }
-
-    let n_fresh_ids: u64 = fresh_ranges_filtered
+    let n_fresh_ids: u64 = fresh_ranges_dedup
         .iter()
         .map(|range| range[1] - range[0] + 1)
         .sum();
@@ -59,19 +51,22 @@ fn is_fresh(ranges: &Vec<Vec<u64>>, id: u64) -> bool {
     false
 }
 
-fn filter_fresh_ranges(fresh_ranges: &Vec<Vec<u64>>) -> Vec<Vec<u64>> {
-    let mut fresh_ranges_filtered: Vec<Vec<u64>> = vec![];
-    let mut curr_range: Vec<u64> = fresh_ranges[0].clone();
+fn dedup_ranges(ranges: &Vec<Vec<u64>>) -> Vec<Vec<u64>> {
+    let mut sorted_ranges = ranges.clone();
+    sorted_ranges.sort_by(|a, b| a[0].cmp(&b[0]));
 
-    for new_fresh_range in fresh_ranges.iter() {
+    let mut ranges_deduplicated: Vec<Vec<u64>> = vec![];
+    let mut curr_range: Vec<u64> = sorted_ranges[0].clone();
+
+    for new_fresh_range in sorted_ranges.iter() {
         if new_fresh_range[0] <= curr_range[1] + 1 {
             curr_range[1] = curr_range[1].max(new_fresh_range[1]);
         } else {
-            fresh_ranges_filtered.push(curr_range);
+            ranges_deduplicated.push(curr_range);
             curr_range = new_fresh_range.clone();
         }
     }
-    fresh_ranges_filtered.push(curr_range);
+    ranges_deduplicated.push(curr_range);
 
-    fresh_ranges_filtered
+    ranges_deduplicated
 }
