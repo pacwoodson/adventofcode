@@ -1,17 +1,10 @@
+use crate::utils;
+
 pub fn solve_fp(input: &String) -> (String, String) {
     let (sum_repeats_two, sum_repeats_more): (u64, u64) = input
         .as_str()
         .split(',')
-        .map(|range_str| {
-            range_str
-                .split('-')
-                .map(|r| {
-                    r.trim()
-                        .parse()
-                        .expect(format!("error parsing range: {}", r).as_str())
-                })
-                .collect::<Vec<u64>>()
-        })
+        .map(utils::parse_range)
         .map(|range| {
             let mut range_sum_repeat_two: u64 = 0;
             let mut range_sum_repeat_more: u64 = 0;

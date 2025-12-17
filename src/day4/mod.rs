@@ -16,7 +16,9 @@ pub fn solve(input: &String) -> (String, String) {
     loop {
         let (_, n_movable, grid_post_remove) = get_movable_grid(&current_grid);
         current_grid = grid_post_remove;
-        if n_movable == 0 {break;}
+        if n_movable == 0 {
+            break;
+        }
         removable_rolls += n_movable;
     }
 
@@ -33,22 +35,24 @@ fn get_movable_grid(grid: &Vec<Vec<bool>>) -> (Vec<Vec<bool>>, usize, Vec<Vec<bo
     let movables: Vec<Vec<bool>> = grid
         .iter()
         .enumerate()
-        .map(|(y, row)| 
+        .map(|(y, row)| {
             row.iter()
                 .enumerate()
                 .map(|(x, _)| grid[y][x] && is_moveable(&grid, x, y))
                 .collect()
-        ).collect();
+        })
+        .collect();
 
-    let grid_post_remove =  grid
+    let grid_post_remove = grid
         .iter()
         .enumerate()
-        .map(|(y, row)| 
+        .map(|(y, row)| {
             row.iter()
                 .enumerate()
-                .map(|(x, _)| if movables[y][x] {false} else {grid[y][x]})
+                .map(|(x, _)| if movables[y][x] { false } else { grid[y][x] })
                 .collect()
-        ).collect();
+        })
+        .collect();
 
     let n_movable: usize = movables
         .iter()

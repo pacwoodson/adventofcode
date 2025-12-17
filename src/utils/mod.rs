@@ -53,3 +53,14 @@ pub fn get_opts() -> AppOpts {
 
     app_opts
 }
+
+pub fn parse_range(s: &str) -> Vec<u64> {
+    s
+    .split('-')
+        .map(|r| {
+            r.trim()
+                .parse()
+                .expect(format!("error parsing range: {}", r).as_str())
+        })
+        .collect()
+}
