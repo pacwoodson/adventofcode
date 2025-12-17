@@ -17,27 +17,61 @@ pub fn solve(input: &String) -> (String, String) {
         .map(|s| s.parse::<u64>().expect("Unable to parse Id"))
         .collect();
 
-    let mut n_ids_fresh = 0;
-    // for range in fresh_ranges.iter() {
-    //     println!("range: {}-{}", range[0], range[1]);
-    // }
+    let mut n_fresh_inventory = 0;
     for id in ingredient_ids {
         let fresh = is_fresh(&fresh_ranges, id);
         // println!("id: {} fresh: {}", id, fresh);
         if fresh {
-            n_ids_fresh += 1;
+            n_fresh_inventory += 1;
         }
     }
 
-    (n_ids_fresh.to_string(), "0".to_string())
+    let mut fresh_ranges_filtered: Vec<Vec<u64>> = fresh_ranges.clone();
+    fresh_ranges_filtered.sort_by(|a, b| a[0].cmp(&b[0]));
+
+    println!("fresh ranges not filtered:");
+    for fresh_range in fresh_ranges_filtered.iter() {
+        println!("{}-{}", fresh_range[0], fresh_range[1]);
+    }
+
+    fresh_ranges_filtered = filter_fresh_ranges(&fresh_ranges_filtered);
+
+    println!("fresh ranges filtered:");
+    for fresh_range in fresh_ranges_filtered.iter() {
+        println!("{}-{}", fresh_range[0], fresh_range[1]);
+    }
+
+    let n_fresh_ids: u64 = fresh_ranges_filtered
+        .iter()
+        .map(|range| range[1] - range[0] + 1)
+        .sum();
+
+    (n_fresh_inventory.to_string(), n_fresh_ids.to_string())
 }
 
 fn is_fresh(ranges: &Vec<Vec<u64>>, id: u64) -> bool {
     for range in ranges {
-        if id > range[0] && id <= range[1] {
+        if id >= range[0] && id <= range[1] {
             return true;
         }
     }
 
     false
+}
+
+fn filter_fresh_ranges(fresh_ranges: &Vec<Vec<u64>>) -> Vec<Vec<u64>> {
+    let mut fresh_ranges_filtered: Vec<Vec<u64>> = vec![];
+    let mut curr_range: Vec<u64> = fresh_ranges[0].clone();
+
+    for new_fresh_range in fresh_ranges.iter() {
+        if new_fresh_range[0] <= curr_range[1] + 1 {
+            curr_range[1] = curr_range[1].max(new_fresh_range[1]);
+        } else {
+            fresh_ranges_filtered.push(curr_range);
+            curr_range = new_fresh_range.clone();
+        }
+    }
+    fresh_ranges_filtered.push(curr_range);
+
+    fresh_ranges_filtered
 }
