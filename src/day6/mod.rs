@@ -1,7 +1,7 @@
 use std::fmt::Display;
 use crate::utils;
 
-pub fn solve(input: &String) -> (String, String) {
+pub fn solve(input: &String, _: bool) -> (String, String) {
     let lines = utils::lines_to_vec(input);
     let (data_lines, ops_line) = lines.split_at(lines.len() - 1);
     

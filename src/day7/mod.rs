@@ -123,7 +123,7 @@ impl Manifold {
     }
 }
 
-pub fn solve(input: &String) -> (String, String) {
+pub fn solve(input: &String, _: bool) -> (String, String) {
     let mut m = Manifold::from(&input);
 
     // m.print();

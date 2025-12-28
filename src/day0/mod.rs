@@ -1,5 +1,5 @@
 use crate::utils;
 
-pub fn solve(input: &String) -> (String, String) {
+pub fn solve(input: &String, _: bool) -> (String, String) {
     ("0".to_string(), "0".to_string())
 }

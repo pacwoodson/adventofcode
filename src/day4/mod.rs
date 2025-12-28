@@ -1,4 +1,4 @@
-pub fn solve(input: &String) -> (String, String) {
+pub fn solve(input: &String, _: bool) -> (String, String) {
     let original_grid: Vec<Vec<bool>> = input
         .lines()
         .map(|line| {

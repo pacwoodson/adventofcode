@@ -118,6 +118,6 @@ pub fn solve_ip(input: &String) -> (String, String) {
     (sum.to_string(), 0.to_string())
 }
 
-pub fn solve(input: &String) -> (String, String) {
+pub fn solve(input: &String, _: bool) -> (String, String) {
     solve_fp(input)
 }
