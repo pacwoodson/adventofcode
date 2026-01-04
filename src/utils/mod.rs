@@ -18,7 +18,7 @@ pub struct DayInput {
 }
 
 pub fn get_day_input(day: usize) -> DayInput {
-    let base_path = format!("src/day{}/", day);
+    let base_path = format!("data/day{}/", day);
     let input_path = format!("{}/input", base_path);
     #[cfg(test)]
     let input_test_path = format!("{}/input_test", base_path);
