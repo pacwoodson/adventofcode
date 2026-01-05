@@ -1,0 +1,1 @@
+tests passes but it can find equation solution for some of the inputs for part 2
