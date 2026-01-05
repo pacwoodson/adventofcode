@@ -133,7 +133,7 @@ pub fn solve(input: &String, _: bool) -> (String, String) {
             }
 
             if good {
-                dbg!(tiles_area);
+                // dbg!(tiles_area);
                 return (max_area.to_string(), tiles_area.area.to_string());
             }
         }

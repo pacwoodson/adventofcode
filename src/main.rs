@@ -7,9 +7,10 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
+mod day10;
 mod utils;
 
-const SOLVE_FNS: [fn(&String, bool) -> (String, String); 9] = [
+const SOLVE_FNS: [fn(&String, bool) -> (String, String); 10] = [
     day1::solve,
     day2::solve,
     day3::solve,
@@ -19,6 +20,7 @@ const SOLVE_FNS: [fn(&String, bool) -> (String, String); 9] = [
     day7::solve,
     day8::solve,
     day9::solve,
+    day10::solve,
 ];
 
 fn main() {
